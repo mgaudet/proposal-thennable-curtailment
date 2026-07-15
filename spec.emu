@@ -41,25 +41,6 @@ contributors: Matthew Gaudet, Justin Ridgewell
     </emu-note>
   </emu-clause>
 
-  <emu-clause id="sec-requires-deferred-promise-resolution" type="abstract operation">
-    <h1>
-      RequiresDeferredPromiseResolution (
-        _value_: an ECMAScript language value,
-      ): a Boolean
-    </h1>
-    <dl class="header">
-      <dt>description</dt>
-      <dd>It determines whether the synchronous steps of resolving a promise with _value_ might execute user code.</dd>
-    </dl>
-    <emu-alg>
-      1. <ins>If _value_ is not an Object, return *false*.</ins>
-      1. <ins>If PropertyAccessCouldRunUserCode(_value_, *"then"*, ~get~) is *true*, return *true*.</ins>
-      1. <ins>Let _thenValue_ be ! _value_.[[Get]](*"then"*).</ins>
-      1. <ins>If IsCallable(_thenValue_) is *true*, return *true*.</ins>
-      1. <ins>Return *false*.</ins>
-    </emu-alg>
-  </emu-clause>
-
   <emu-clause id="sec-perform-promise-resolution" type="abstract operation">
     <h1>
       PerformPromiseResolution (
@@ -225,5 +206,24 @@ contributors: Matthew Gaudet, Justin Ridgewell
       <p>This idea is thanks to Justin Ridgewell who suggested the wrapper idea.</p>
       <p>The wrapper object is never exposed to user code. It is constructed solely so that resolving _promise_ with it uses the existing thenable support for good rather than evil; we mark the promise as not eligible for overriding resolve, and a job is created for running the 'then' code.</p>
     </emu-note>
+
+    <emu-clause id="sec-requires-deferred-promise-resolution" type="abstract operation">
+      <h1>
+        RequiresDeferredPromiseResolution (
+          _value_: an ECMAScript language value,
+        ): a Boolean
+      </h1>
+      <dl class="header">
+        <dt>description</dt>
+        <dd>It determines whether the synchronous steps of resolving a promise with _value_ might execute user code.</dd>
+      </dl>
+      <emu-alg>
+        1. <ins>If _value_ is not an Object, return *false*.</ins>
+        1. <ins>If PropertyAccessCouldRunUserCode(_value_, *"then"*, ~get~) is *true*, return *true*.</ins>
+        1. <ins>Let _thenValue_ be ! _value_.[[Get]](*"then"*).</ins>
+        1. <ins>If IsCallable(_thenValue_) is *true*, return *true*.</ins>
+        1. <ins>Return *false*.</ins>
+      </emu-alg>
+    </emu-clause>
   </emu-clause>
 </emu-clause>
