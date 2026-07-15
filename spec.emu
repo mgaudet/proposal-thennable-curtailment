@@ -65,7 +65,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
       PerformPromiseResolution (
         _promise_: a Promise,
         _resolution_: an ECMAScript language value,
-        _called_: ~sync~ or ~deferred~,
+        _thenCallTiming_: ~sync~ or ~deferred~,
       ): either a normal completion containing ~unused~ or an abrupt completion
     </h1>
     <dl class="header">
@@ -89,7 +89,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
       1. <ins>If IsCallable(_thenAction_) is *false*, then</ins>
         1. <ins>Perform FulfillPromise(_promise_, _resolution_).</ins>
         1. <ins>Return ~unused~.</ins>
-      1. <ins>If _called_ is ~deferred~, then</ins>
+      1. <ins>If _thenCallTiming_ is ~deferred~, then</ins>
         1. <ins>Perform ? PerformPromiseResolveThenable(_promise_, _resolution_, _thenAction_).</ins>
         1. <ins>Return ~unused~.</ins>
       1. <ins>Let _thenJobCallback_ be HostMakeJobCallback(_thenAction_).</ins>
