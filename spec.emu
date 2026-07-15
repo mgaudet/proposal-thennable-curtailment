@@ -194,7 +194,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
       1. <ins>If RequiresDeferredPromiseResolution(_resolution_) is *false*, then</ins>
         1. <ins>Return ? Call(_promiseCapability_.[[Resolve]], *undefined*, « _resolution_ »).</ins>
       1. <ins>Let _promise_ be _promiseCapability_.[[Promise]].</ins>
-      1. <ins>Let _deferredSteps_ be a new Abstract Closure  that captures _promise_ and _resolution_ and performs the following steps when called:</ins>
+      1. <ins>Let _deferredSteps_ be a new Abstract Closure that captures _promise_ and _resolution_ and performs the following steps when called:</ins>
         1. <ins>Perform ? PerformPromiseResolution(_promise_, _resolution_, ~deferred~).</ins>
         1. <ins>Return *undefined*.</ins>
       1. <ins>Let _deferredThen_ be CreateBuiltinFunction(_deferredSteps_, 0, *""*, « »).</ins>
