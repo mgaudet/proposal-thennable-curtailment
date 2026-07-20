@@ -33,8 +33,8 @@ contributors: Matthew Gaudet, Justin Ridgewell
       1. <ins>If _desc_ is not *undefined*, then</ins>
         1. <ins>If _desc_ has a [[Get]] field and kind is ~any~ or ~get~, return *true*.</ins>
         1. <ins>If _desc_ has a [[Set]] field and kind is ~any~ or ~set~, return *true*.</ins>
-        1. return *false*.
-      1. <ins>return PropertyAccessCouldRunUserCode(_o_.[[GetPrototypeOf]](), _propertyKey_, _kind_).</ins>
+        1. Return *false*.
+      1. <ins>Return PropertyAccessCouldRunUserCode(_o_.[[GetPrototypeOf]](), _propertyKey_, _kind_).</ins>
     </emu-alg>
     <emu-note>
       <p>This relies on ordinary [[GetPrototypeOf]] never running user code. A Proxy is handled by short-circuiting with *true* before any of its MOP is invoked.</p>
