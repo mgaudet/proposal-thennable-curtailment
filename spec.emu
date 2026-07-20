@@ -35,7 +35,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
       1. <ins>If _desc_ is not *undefined*, then</ins>
         1. <ins>If _desc_ has a [[Get]] field and kind is ~any~ or ~get~, return *true*.</ins>
         1. <ins>If _desc_ has a [[Set]] field and kind is ~any~ or ~set~, return *true*.</ins>
-        1. Return *false*.
+        1. <ins>Return *false*.</ins>
       1. <ins>Return PropertyAccessCouldRunUserCode(_o_.[[GetPrototypeOf]](), _propertyKey_, _kind_).</ins>
     </emu-alg>
   </emu-clause>
