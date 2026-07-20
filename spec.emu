@@ -26,6 +26,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
       <dd>It walks the prototype chain of _o_ looking for _propertyKey_, returning *true* if retrieving the property could run user code when performing the operation of _kind_: that is, the property is a getter, setter, or a Proxy is encountered on the chain. This should never run user code.</dd>
     </dl>
     <emu-alg>
+      1. <ins>Assert: The following steps do not run user code.</ins>
       1. <ins>If _o_ is *null*, return *false*.</ins>
       1. <ins>If _o_ has a [[ProxyHandler]] internal slot, return *true*.</ins>
       1. <ins>If HostObjectHasImpureLookupInternalMethods(_o_) returns *true*, return *true*.</ins>
@@ -37,9 +38,6 @@ contributors: Matthew Gaudet, Justin Ridgewell
         1. Return *false*.
       1. <ins>Return PropertyAccessCouldRunUserCode(_o_.[[GetPrototypeOf]](), _propertyKey_, _kind_).</ins>
     </emu-alg>
-    <emu-note>
-      <p>This relies on ordinary [[GetPrototypeOf]] never running user code. A Proxy is handled by short-circuiting with *true* before any of its MOP is invoked.</p>
-    </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-perform-promise-resolution" type="abstract operation">
