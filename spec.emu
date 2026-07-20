@@ -47,7 +47,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
         _promise_: a Promise,
         _resolution_: an ECMAScript language value,
         _thenCallTiming_: ~sync~ or ~deferred~,
-      ): either a normal completion containing ~unused~ or an abrupt completion
+      ): a normal completion containing ~unused~
     </h1>
     <dl class="header">
       <dt>description</dt>
@@ -115,7 +115,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
         _promiseToResolve_: a Promise,
         _thenable_: an Object,
         _then_: a JobCallback Record or a function object,
-      ): either a normal completion containing an ECMAScript language value or a throw completion
+      ): a normal completion containing an ECMAScript language value
     </h1>
     <dl class="header">
     </dl>
