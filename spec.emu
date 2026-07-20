@@ -28,8 +28,8 @@ contributors: Matthew Gaudet, Justin Ridgewell
     <emu-alg>
       1. <ins>Assert: The following steps do not run user code.</ins>
       1. <ins>If _o_ is *null*, return *false*.</ins>
+      1. <ins>If HostObjectHasImpureLookupInternalMethods(_o_) is *true*, return *true*.</ins>
       1. <ins>If _o_ has a [[ProxyHandler]] internal slot, return *true*.</ins>
-      1. <ins>If HostObjectHasImpureLookupInternalMethods(_o_) returns *true*, return *true*.</ins>
       1. <ins>if _o_ has the [[GetPrototypeOf]] and [[GetOwnProperty]] internal methods as defined in <emu-xref href="#sec-ordinary-object-internal-methods-and-internal-slots"></emu-xref>, return *true*.</ins>
       1. <ins>Let _desc_ be _o_.[[GetOwnProperty]](_propertyKey_).</ins>
       1. <ins>If _desc_ is not *undefined*, then</ins>
@@ -229,8 +229,8 @@ contributors: Matthew Gaudet, Justin Ridgewell
 <emu-clause id="sec-hosthasinternalmethodswhichcanrunusercode" type="host-defined abstract operation">
   <h1>
     HostObjectHasImpureLookupInternalMethods (
-      _object_: A job
-    ): a boolean
+      _object_: an Object.
+    ): a Boolean
   </h1>
   <dl class="header">
     <dt>description</dt>
@@ -239,6 +239,8 @@ contributors: Matthew Gaudet, Justin Ridgewell
 
   <p>An implementation of HostObjectHasImpureLookupInternalMethods should return *true* if the given object is a host defined object with its own definition of [[GetOwnProperty]] or [[GetPrototypeOf]] such that
   user code could run</p>
+
+  <p>The default implementation of HostObjectHasImpureLookupInternalMethods is to return *false*.</p>
 </emu-clause>
 
 <emu-annex id="sec-host-hooks-summary">
