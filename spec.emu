@@ -230,7 +230,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
 <emu-clause id="sec-hosthasinternalmethodswhichcanrunusercode" type="host-defined abstract operation">
   <h1>
     HostObjectHasImpureLookupInternalMethods (
-      _object_: an Object.
+      _object_: an Object,
     ): a Boolean
   </h1>
   <dl class="header">
@@ -239,8 +239,8 @@ contributors: Matthew Gaudet, Justin Ridgewell
   </dl>
 
   <p>An implementation of HostObjectHasImpureLookupInternalMethods should return *true* if the given object is a host defined object with its own definition of [[GetOwnProperty]] or [[GetPrototypeOf]] such that
-  user code could run</p>
-  <p>An implementation of HostObjectHasImpureLookupInternalMethods cannot run user code</p>
+  user code could run. </p>
+  <p>An implementation of HostObjectHasImpureLookupInternalMethods cannot run user code.</p>
 
   <p>The default implementation of HostObjectHasImpureLookupInternalMethods is to return *false*.</p>
 </emu-clause>
