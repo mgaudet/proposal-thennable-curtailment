@@ -26,19 +26,19 @@ contributors: Matthew Gaudet, Justin Ridgewell
       <dd>It walks the prototype chain of _o_ looking for _propertyKey_, returning *true* if retrieving the property could run user code when performing the operation of _kind_: that is, the property is a getter, setter, or a Proxy is encountered on the chain. This should never run user code.</dd>
     </dl>
     <emu-alg>
-      1. <ins>If _o_ is *null*, return *false*.</ins>
-      1. <ins>If _o_ has a [[ProxyHandler]] internal slot, return *true*.</ins>
-      1. <ins>If _o_ uses different steps than the ordinary object steps for [[GetPrototypeOf]] or [[GetOwnProperty]], return *true*.</ins>
-      1. <ins>Let _desc_ be _o_.[[GetOwnProperty]](_propertyKey_).</ins>
+      1. <ins>Assert: The following steps do not run user code.</ins>
+      1. <ins>If _o_ has the [[GetPrototypeOf]] and [[GetOwnProperty]] internal methods as defined in <emu-xref href="#sec-proxy-object-internal-methods-and-internal-slots"></emu-xref>, return *true*.</ins>
+      1. <ins>If _o_ has the [[GetPrototypeOf]] and [[GetOwnProperty]] internal methods as defined in <emu-xref href="#sec-module-namespace-exotic-objects"></emu-xref>, return *true*.</ins>
+      1. <ins>If HostObjectHasImpureLookupInternalMethods(_o_) is *true*, return *true*.</ins>
+      1. <ins>Let _desc_ be ! _o_.[[GetOwnProperty]](_propertyKey_).</ins>
       1. <ins>If _desc_ is not *undefined*, then</ins>
-        1. <ins>If _desc_ has a [[Get]] field and kind is ~any~ or ~get~, return *true*.</ins>
-        1. <ins>If _desc_ has a [[Set]] field and kind is ~any~ or ~set~, return *true*.</ins>
-        1. Return *false*.
-      1. <ins>Return PropertyAccessCouldRunUserCode(_o_.[[GetPrototypeOf]](), _propertyKey_, _kind_).</ins>
+        1. <ins>If _desc_ has a [[Getter]] field and kind is ~any~ or ~get~, return *true*.</ins>
+        1. <ins>If _desc_ has a [[Setter]] field and kind is ~any~ or ~set~, return *true*.</ins>
+        1. <ins>Return *false*.</ins>
+      1. <ins>Let _proto_ be _o_.[[GetPrototypeOf]]().</ins>
+      1. <ins>If _proto_ is *null*, return *false*.</ins>
+      1. <ins>Return PropertyAccessCouldRunUserCode(_proto_, _propertyKey_, _kind_).</ins>
     </emu-alg>
-    <emu-note>
-      <p>This relies on ordinary [[GetPrototypeOf]] never running user code. A Proxy is handled by short-circuiting with *true* before any of its MOP is invoked.</p>
-    </emu-note>
   </emu-clause>
 
   <emu-clause id="sec-perform-promise-resolution" type="abstract operation">
@@ -226,3 +226,42 @@ contributors: Matthew Gaudet, Justin Ridgewell
     </emu-clause>
   </emu-clause>
 </emu-clause>
+
+<emu-clause id="sec-hosthasinternalmethodswhichcanrunusercode" type="host-defined abstract operation">
+  <h1>
+    HostObjectHasImpureLookupInternalMethods (
+      _object_: an Object,
+    ): a Boolean
+  </h1>
+  <dl class="header">
+    <dt>description</dt>
+    <dd>Indicates if a host object overrides the methods [[GetOwnProperty]] or [[GetPrototypeOf]] in such a way that user code could run.</dd>
+  </dl>
+
+  <p>An implementation of HostObjectHasImpureLookupInternalMethods should return *true* if the given object is a host defined object with its own definition of [[GetOwnProperty]] or [[GetPrototypeOf]] such that
+  user code could run. </p>
+  <p>An implementation of HostObjectHasImpureLookupInternalMethods cannot run user code.</p>
+
+  <p>The default implementation of HostObjectHasImpureLookupInternalMethods is to return *false*.</p>
+</emu-clause>
+
+<emu-annex id="sec-host-hooks-summary">
+  <h1>Host Hooks</h1>
+  <p><b>HostCallJobCallback(...)</b></p>
+  <p><b>HostEnqueueFinalizationRegistryCleanupJob(...)</b></p>
+  <p><b>HostEnqueueGenericJob(...)</b></p>
+  <p><b>HostEnqueuePromiseJob(...)</b></p>
+  <p><b>HostEnqueueTimeoutJob(...)</b></p>
+  <p><b>HostEnsureCanCompileStrings(...)</b></p>
+  <p><b>HostFinalizeImportMeta(...)</b></p>
+  <p><b>HostGetImportMetaProperties(...)</b></p>
+  <p><b>HostGrowSharedArrayBuffer(...)</b></p>
+  <p><b>HostHasSourceTextAvailable(...)</b></p>
+  <p><b>HostLoadImportedModule(...)</b></p>
+  <p><b>HostGetSupportedImportAttributes(...)</b></p>
+  <p><b>HostMakeJobCallback(...)</b></p>
+  <p><b>HostPromiseRejectionTracker(...)</b></p>
+  <p><b>HostResizeArrayBuffer(...)</b></p>
+  <p><b>InitializeHostDefinedRealm(...)</b></p>
+  <ins><p><b>HostObjectHasImpureLookupInternalMethods(...)</b></p></ins>
+</emu-annex>
