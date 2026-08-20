@@ -23,7 +23,7 @@ contributors: Matthew Gaudet, Justin Ridgewell
     </h1>
     <dl class="header">
       <dt>description</dt>
-      <dd>It walks the prototype chain of _o_ looking for _propertyKey_, returning *true* if retrieving the property could run user code when performing the operation of _kind_: that is, the property is a getter, setter, or a Proxy is encountered on the chain. This should never run user code.</dd>
+      <dd>It walks the prototype chain of _o_ looking for _propertyKey_, returning *true* if accessing the property could run user code when performing an operation of _kind_: that is, the property is an accessor whose accessor function for _kind_ is present, or a Proxy exotic object, a module namespace exotic object, or a host object with impure lookup internal methods is encountered on the chain. This should never run user code.</dd>
     </dl>
     <emu-alg>
       1. <ins>Assert: The following steps do not run user code.</ins>
@@ -32,8 +32,9 @@ contributors: Matthew Gaudet, Justin Ridgewell
       1. <ins>If HostObjectHasImpureLookupInternalMethods(_o_) is *true*, return *true*.</ins>
       1. <ins>Let _desc_ be ! _o_.[[GetOwnProperty]](_propertyKey_).</ins>
       1. <ins>If _desc_ is not *undefined*, then</ins>
-        1. <ins>If _desc_ has a [[Getter]] field and kind is ~any~ or ~get~, return *true*.</ins>
-        1. <ins>If _desc_ has a [[Setter]] field and kind is ~any~ or ~set~, return *true*.</ins>
+        1. <ins>If IsAccessorDescriptor(_desc_) is *true*, then</ins>
+          1. <ins>If _kind_ is either ~any~ or ~get~, and _desc_.[[Get]] is not *undefined*, return *true*.</ins>
+          1. <ins>If _kind_ is either ~any~ or ~set~, and _desc_.[[Set]] is not *undefined*, return *true*.</ins>
         1. <ins>Return *false*.</ins>
       1. <ins>Let _proto_ be _o_.[[GetPrototypeOf]]().</ins>
       1. <ins>If _proto_ is *null*, return *false*.</ins>
